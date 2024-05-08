@@ -17,6 +17,9 @@ from deepgram import (
     LiveOptions,
     Microphone,
     )
+import sounddevice as sd
+import soundfile as sf
+import os
 
 def Manager():
     # Import the API keys using the function from apikeys.py
@@ -57,7 +60,6 @@ def Manager():
             elapsed_time = int((end_time - start_time) * 1000)
             print(f"LLM ({elapsed_time}ms): {response['text']}")
             return response['text']  # Remove a conversão de codificação aqui
-
     class TextToSpeech:
         @staticmethod
         def is_installed(lib_name: str) -> bool:
@@ -87,8 +89,13 @@ def Manager():
 
             print("Audio file generated successfully.")  # Debugging: Print a message indicating successful audio file generation
 
-            # Toca o arquivo de áudio usando o player padrão do sistema
-            subprocess.run(['ffplay', '-nodisp', 'output.mp3', '-autoexit'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            # Reproduz o áudio usando o sounddevice
+            data, fs = sf.read('output.mp3', dtype='float32')
+            sd.play(data, fs)
+            sd.wait()  # Espera a reprodução do áudio terminar
+
+            # Remove o arquivo de áudio gerado
+            os.remove('output.mp3')
 
     class TranscriptCollector:
         def __init__(self):
@@ -227,5 +234,6 @@ def Manager():
     #if __name__ == "__main__":
     manager = ConversationManager()
     asyncio.run(manager.main())
+
 
 
