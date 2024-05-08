@@ -85,7 +85,7 @@ psutil==5.9.8
 ptyprocess==0.7.0
 pure-eval==0.2.2
 pyarrow==16.0.0
-PyAudio==0.2.14
+PyAudio
 pycparser==2.21
 pydantic==2.6.2
 pydantic_core==2.16.3
