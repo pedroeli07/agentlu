@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import date
 @st.cache_data
 def carregar_dados():
-    tabela = pd.read_csv("C:/projetos/agentlu/graficos/Avel_Dallastra.csv")
+    tabela = pd.read_csv("Avel_Dallastra.csv")
     tabela['Data'] = pd.to_datetime(tabela['Data'])
     return tabela
 
